@@ -237,7 +237,14 @@
         objet.pourChaque();
         objet.pourChaqueBis();
 
-        
+        // .map()
+        let numbers = [1, 2, 56, 4, 123];
+        let newNumbers = numbers.map(function(value, index, myArray){
+            return value*10;
+        });
+
+        console.log(numbers);
+        console.log(newNumbers);
 
     </script>
 </head>
