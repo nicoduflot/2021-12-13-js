@@ -140,8 +140,29 @@
          * 
         */
 
-        //
+        let chaineQuote = 'Lorem ipsum dolor sit amet, consectetur ';
+        chaineQuote = chaineQuote + 'adipisicing elit. Explicabo quam excepturi odit maiores, \n';
+        chaineQuote += 'a corrupti eligendi doloribus. Doloribus ';
+        chaineQuote += 'officiis nam id iusto. Tempora blanditiis nisi ';
+        chaineQuote += 'et quibusdam? Fuga, aperiam pariatur.';
+        console.log(chaineQuote);
+
+        let chaineBackQuote = `Lorem ipsum dolor sit amet, consectetur 
+adipisicing elit. Explicabo quam excepturi odit maiores, 
+a corrupti eligendi doloribus. Doloribus 
+officiis nam id iusto. Tempora blanditiis nisi 
+et quibusdam? Fuga, aperiam pariatur.`;
+
+        console.log(chaineBackQuote);
         
+        function renvoiUnMot(unMot = 'Coucou'){
+            return unMot;
+        }
+
+        // Interpolation de chaîne
+        let a = 1;
+        let template = `a : ${a}, 1 + 2 = ${1 + 2}, renvoiUnMot() : ${renvoiUnMot()},  renvoiUnMot('test') : ${renvoiUnMot('test')} `;
+        console.log(template);
 
     </script>
 </head>
