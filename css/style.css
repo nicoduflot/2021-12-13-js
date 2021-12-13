@@ -1,0 +1,7 @@
+h1, .h1{
+    margin-bottom: 0;
+}
+
+body > footer{
+    margin-top: 0.5rem;
+}
