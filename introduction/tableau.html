@@ -10,6 +10,233 @@
     <script src="../js/bootstrap.bundle.js"></script>
     <link rel="stylesheet" href="../css/style.css" />
     <script>
+        // avant es6 pour créer un tableau
+        // var tableau = new Array('valeur', 1, 2, 3.4, true);
+        // depuis es6
+        //let cars = [];// crée une variable de type tableau vide
+        let cars = ['Peugeot', 'Citroën', 'Ford', 'Renault'];
+        console.log(cars);
+        console.table(cars);
+        console.log(cars[1]);
+        console.log(`le tableau cars : ${cars} contient ${cars.length} élément(s)`);
+
+        // les tableaux sont l'équivalents d'objets itérables
+        let unNombre = 1;
+        let unTexte = 'test';
+
+        console.log(typeof unNombre);
+        console.log(typeof unTexte);
+        console.log(typeof cars);
+
+        /* 
+        les boucles servent a parcourir un tableau, 
+        c'est à dire aller voir les éléménents qui y sont 
+        contenu et s'arrêter selon des conditions
+        */
+
+        // for
+        console.log('-------------- boucle for --------------');
+        for (let i = 0; i < cars.length; i++) {
+            console.log(`cars[${i}] : ${cars[i]} `);
+        }
+
+        // for in
+        console.log('-------------- boucle for in --------------');
+        for (let index in cars) {
+            console.log(`cars[${index}] : ${cars[index]} `);
+        }
+
+        // le for in sert aussi à parcourir les élément d'un objet
+        let obj = {
+            nom: 'Duflot',
+            prenom: 'Nicolas',
+            presentation: function () {
+                return `je m'appelle ${this.nom} `
+            }
+        };
+
+        console.log(obj);
+        console.log(obj.nom);
+        console.log(obj.presentation());
+
+        for (let key in obj) {
+            console.log(obj[key]);
+        }
+
+        // for of es6
+        console.log('-------------- boucle for in --------------');
+        for (let value of cars) {
+            console.log(`la valeur actuelle dans cars est : ${value} `);
+        }
+
+        console.log('---------- do while --------');
+        let cpt = 0;
+        do {
+            console.log(cars[cpt]);
+            cpt++;
+        } while (cpt < cars.length)
+
+        console.log('---------- while --------');
+        cpt = 0;
+        while (cpt < cars.length) {
+            console.log(cars[cpt]);
+            cpt++;
+        }
+
+        let tabNumber = [1, 2, 3];
+
+        //forEach
+        console.log('---------- forEach --------');
+        tabNumber.forEach(function (value, index, tableau) {
+            console.log(`valeur actuelle de tabNumber : ${value}, index actuel de tabNumber : ${index}, tabNumber : ${tableau} `);
+            tableau[index] = value * 10;
+        });
+
+        console.log(tabNumber);
+
+        // es6 .entries()
+        /*
+        Vient du modèle objet : permet de parcourir et d'extraire les clefs et les valeurs
+        d'un tableau sous forme de tableau pour chaque élément
+        */
+
+        console.log('---------- .entries() ------------');
+        for (let entry of cars.entries()) {
+            console.log(entry);
+            console.log(entry[0]);
+            console.log(entry[1]);
+        }
+
+        // ajouter un élément dans un tableau
+        cars[cars.length] = 'Hyundai';
+        //
+        //cars[8] = 'Papamobile'; // jamais dangereux
+
+        cars.push('Seat');
+        cars.push('Fiat', 'Toyota');
+
+        console.log(cars);
+
+        // supprimer des éléments du tableau
+        // .pop(), .shift(), .splice()
+
+        // .pop() => extrait la dernière valeur du tableau
+        let extractLast = cars.pop();
+        console.log(cars);
+        console.log(extractLast);
+
+        // .shif() => extrait la première valeur du tableau et réordone les index
+        let extractFirst = cars.shift();
+        console.log(cars);
+        console.log(extractFirst);
+
+        // splice permet plus que simplement supprimer des valeurs
+        // .splice() 1 : extraire des valeurs du tableau( retourne un tableau)
+        let removed = cars.splice(cars.indexOf('Ford'), 2);
+        console.log(cars);
+        console.log(removed);
+
+        // .splice() 2 : remplacer des valeur dans un tableau (retourne un tableau)
+        let replaced = cars.splice(cars.indexOf('Citroën'), 2, 'Alpine', 'Mazda', 'Tesla');
+        console.log(cars);
+        console.log(replaced);
+
+        // .splice() 3 : injecter des valeurs dans le tableau
+        cars.splice(cars.indexOf('Mazda'), 0, removed[0], removed[1], replaced[0], replaced[1], extractFirst, extractLast);
+        console.log(cars);
+
+        // faire la copie d'un tableau
+        /*
+        let carsClone = cars;
+
+        carsClone.pop(); // <=> cars.pop()
+        */
+
+        // .slice();
+        let carsClone = cars.slice();
+        carsClone.pop();
+        console.log(cars);
+        console.log(carsClone);
+
+        // trier les valeurs d'un tableau dansl'ordre croissant
+        carsClone.sort();
+        console.log(carsClone);
+
+        // trier les valeurs d'un tableau dansl'ordre décroissant
+        carsClone.reverse();
+        console.log(carsClone);
+
+        carsTest = [['Fiat', 1956], ['Kyia', 1995], ['Kyia', 1990], ['Ford', 1950]];
+        console.table(carsTest);
+        carsTest.sort();
+        console.table(carsTest);
+
+        // les tableaux à 2 dimension n'existent pas vraiment en JS
+        let tab2d = [['a', 'b', 'c'], [12, 13, 14, 15], [10, 23, 56, 4]];
+        console.table(tab2d);
+
+        console.log('------- parcourir tab2d ------------');
+        for (let i = 0; i < tab2d.length; i++) {
+            console.log(tab2d[i]);
+            for (let j = 0; j < tab2d[i].length; j++) {
+                console.log(tab2d[i][j]);
+            }
+        }
+
+        console.log('------- parcourir tab2d avec for of ------------');
+        for (let value of tab2d) {
+            console.log(value);
+            for (let subValue of value) {
+                console.log(subValue);
+            }
+        }
+
+        // recherche d'éléments avec :
+
+        // .find() => retourne la PREMIERE occurence qui correspond à la condition
+        console.log('-------- .find() ---------');
+        let arrayNum = [5, 8, 12, 130, 3, 44];
+        let found = arrayNum.find(function (element) {
+            return 20 < element;
+        });
+
+        console.log(found);
+
+        // filtre sur les tableaux
+        /*
+        let filtered = arrayNum.filter( function(element){
+            return 5 < element;
+        });
+        */
+        //opérateur arrow 
+        let filtered = arrayNum.filter(element => 5 < element);
+
+        console.log(filtered);
+
+        // attention aux conséquences en utilisant l'opérateur arrow
+
+        let objet = {
+            numbers: [1, 2, 56, 4, 123],
+            pourChaque: function(){
+                for(let i = 0; i < this.numbers.length; i++){
+                    console.log(` dans le for, this : ${this}, this.numbers : ${this.numbers}`);
+                }
+                let _this = this;
+                this.numbers.forEach(function(value){
+                    console.log(` dans le forEach, this : ${this}, value : ${value}, this.numbers: ${this.numbers}`);
+                    console.log(` dans le forEach, _this : ${_this}, value : ${value}, _this.numbers: ${_this.numbers}`);
+                });
+            },
+            pourChaqueBis: function(){
+                this.numbers.forEach(value => {
+                    console.log(` dans le forEach, this : ${this}, value : ${value}, this.numbers: ${this.numbers}`);
+                });
+            }
+        };
+
+        objet.pourChaque();
+        objet.pourChaqueBis();
+
         
 
     </script>
@@ -56,7 +283,7 @@
                     <h2></h2>
                 </header>
                 <main>
-                    
+
                 </main>
                 <footer class="text-center">
                     <a href="../introduction/tableau.html">
