@@ -10,7 +10,72 @@
     <script src="../js/bootstrap.bundle.js"></script>
     <link rel="stylesheet" href="../css/style.css" />
     <script>
-        // les fonctions
+        // les fonctions sans paramètre
+        function maPremiereFonction(){
+            return 'Hello world !';
+            //alert('alert : hello world')
+        }
+
+        console.log(maPremiereFonction());
+
+        // fonctions avec paramètre
+        function ouiMaitre(commande = 'la fermer'){
+            /*
+            if(!commande){
+                commande = 'la fermer';
+            }
+            */
+            return `Oui maître je vais ${commande}`;
+        }
+
+        console.log(ouiMaitre());
+        console.log(ouiMaitre('aller chercher un cadavre'));
+
+        // paramètre spécial => l'opérateur vraiadique ou rest parameter => ...variable
+        /*
+        l'opérateur variadique transforme une suite de paramètres (de 1 à x paramètres) 
+        en un tableau dans la fonction
+        ATTENTION ce aramètred oit toujours n'exister qu'en un seul exemplaire dans 
+        la définition de la fonction et toujours en dernier.
+        */
+
+        function addition(...values){
+            let result = 0;
+            for(let value of values){
+                if( !isNaN(value) ){
+                    result += parseFloat(value);
+                }
+            }
+            return result;
+        }
+
+        console.log(addition(1,2,'3.2', 'text',4,5,6,7));
+
+        // fonction anonyme : fonction utilisée dans des instruction qui n'on pas de nom ou de définition
+        // elles s'utilisents "sur le pouce"
+
+        let maFonctionAnonyme = function(name = null){
+            let result = 'Hello ';
+            if(null === name){
+                result += 'Kitty';
+            }else{
+                result += name;
+            }
+            return result;
+        };
+
+        console.log(maFonctionAnonyme());
+        console.log(maFonctionAnonyme('Nicolas'));
+
+        function afficheElement(element){
+            console.log(element);
+        }
+
+        let tableTest = [1, 2, 3, 4];
+        tableTest.forEach(function(element){
+            console.log(element);
+        });
+
     </script>
 </head>
 
