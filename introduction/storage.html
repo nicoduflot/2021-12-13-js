@@ -1,0 +1,375 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Formation Javascript initiation</title>
+    <link rel="stylesheet" href="../css/bootstrap.css" />
+    <script src="../js/bootstrap.bundle.js"></script>
+    <link rel="stylesheet" href="../css/style.css" />
+    <script src="../js/script.js"></script>
+    <script>
+        window.addEventListener('DOMContentLoaded', function(){
+            // on attend que le navigateur nous renvoie l'évènement DOMContentLoaded, qui 
+            // indique quand la page web s'est totalement chargée => on peut maintenant 
+            // intervenir sereinement sur tous les éléments
+            // de la page sans risquer une erreur sur ses éléments
+            
+            //sessionStorage
+            // on récupère l'élément btnSession
+            let btnSession = document.querySelector('#btnSession');
+            let sessionUser = document.querySelector('#sessionUser');
+            let dataSession = document.querySelector('#dataSession');
+            let btnClearSessionItem = document.querySelector('#btnClearSessionItem');
+            let btnClearSession = document.querySelector('#btnClearSession');
+            
+            console.log(btnSession);
+            console.log(sessionUser);
+            console.log(dataSession);
+            console.log(sessionStorage);
+
+            if(sessionStorage.getItem('sessionUserName')){
+                dataSession.innerHTML = `<b>${sessionStorage.getItem('sessionUserName')}</b>`;
+            }else{
+                dataSession.innerHTML = `<b>Pas de sessionUserName d'enregistré</b>`;
+            }
+
+            btnSession.addEventListener('click', function(event){
+                //console.log(event);
+                //console.log(event.target);
+                //console.log('click sur le btnSession');
+                if( sessionUser.value !== '' ){
+                    sessionStorage.setItem('sessionUserName', sessionUser.value);
+                    dataSession.innerHTML = `<b>${sessionStorage.getItem('sessionUserName')}</b>`;
+                    sessionUser.value = '';
+                    console.log(sessionStorage);
+                }
+            });
+
+            btnClearSessionItem.addEventListener('click', function(){
+                if(sessionStorage.getItem('sessionUserName')){
+                    sessionStorage.removeItem('sessionUserName');
+                    dataSession.innerHTML = `<b>sessionUserName effacé</b>`;
+                    console.log(sessionStorage);
+                }
+            });
+
+            btnClearSession.addEventListener('click', function(){
+                sessionStorage.clear();
+                dataSession.innerHTML = `<b>Session effacée</b>`;
+                console.log(sessionStorage);
+            });
+
+            //localStorage
+            // on récupère l'élément btnSession
+            let btnLocal = document.querySelector('#btnLocal');
+            let localUser = document.querySelector('#localUser');
+            let dataLocal = document.querySelector('#dataLocal');
+            let btnClearLocalItem = document.querySelector('#btnClearLocalItem');
+            let btnClearLocal = document.querySelector('#btnClearLocal');
+            
+            console.log(btnLocal);
+            console.log(localUser);
+            console.log(dataLocal);
+            console.log(localStorage);
+
+            if(localStorage.getItem('localUserName')){
+                dataLocal.innerHTML = `<b>${localStorage.getItem('localUserName')}</b>`;
+            }else{
+                dataLocal.innerHTML = `<b>Pas de localUserName d'enregistré</b>`;
+            }
+
+            btnLocal.addEventListener('click', function(event){
+                //console.log(event);
+                //console.log(event.target);
+                //console.log('click sur le btnSession');
+                if( localUser.value !== '' ){
+                    localStorage.setItem('localUserName', localUser.value);
+                    dataLocal.innerHTML = `<b>${localStorage.getItem('localUserName')}</b>`;
+                    localUser.value = '';
+                    console.log(localStorage);
+                }
+            });
+
+            btnClearLocalItem.addEventListener('click', function(){
+                if(localStorage.getItem('localUserName')){
+                    localStorage.removeItem('localUserName');
+                    dataLocal.innerHTML = `<b>localUserName effacé</b>`;
+                    console.log(localStorage);
+                }
+            });
+
+            btnClearLocal.addEventListener('click', function(){
+                localStorage.clear();
+                dataLocal.innerHTML = `<b>Local effacée</b>`;
+                console.log(localStorage);
+            });
+
+            // les cookies
+            // les cookies sont contenus dans l'atribut cookie de l'objet document
+            /*
+            console.log(document.cookie);
+            // ajouter un cookie : 
+            let cookieValue = 'nico';
+            // date d'expiration
+            let dateNow = new Date();
+            //console.log(dateNow);
+            // date d'expiration + 24 h
+            dateNow.setTime( dateNow.getTime() + (1 * 24 * 60 * 60 * 1000) );
+            //console.log(dateNow);
+            // détruire prématurément un cookie, il faut lui donner une date d'éexpiration dépassée
+            let anteDateNow = new Date();
+            anteDateNow.setTime( anteDateNow.getTime() + (-1 * 24 * 60 * 60 * 1000) );
+            console.log(anteDateNow);
+
+            // créer un cookie
+            document.cookie = `monCookie=${cookieValue}; expires=${anteDateNow.toUTCString()}; SameSite=Strict; Secure`;
+            */
+            /*
+            setCookie('monCookie', 'test', 1);
+            console.log(document.cookie);
+            
+            setCookie('monCookie');
+            console.log(document.cookie);
+            
+
+            console.log(getCookie('monCookie'));
+            console.log(getCookie('monCookie2'));
+            */
+
+
+            //cookie
+            // on récupère l'élément btnCookie
+            let btnCookie = document.querySelector('#btnCookie');
+            let cookieUser = document.querySelector('#cookieUser');
+            let dataCookie = document.querySelector('#dataCookie');
+            let btnClearCookieItem = document.querySelector('#btnClearCookieItem');
+            let btnClearCookie = document.querySelector('#btnClearCookie');
+            
+            console.log(btnCookie);
+            console.log(localUser);
+            console.log(dataCookie);
+            console.log(document.cookie);
+
+            if(getCookie('cookieUserName')){
+                dataCookie.innerHTML = `<b>${getCookie('cookieUserName')}</b>`;
+            }else{
+                dataCookie.innerHTML = `<b>Pas de cookieUserName d'enregistré</b>`;
+            }
+
+            btnCookie.addEventListener('click', function(event){
+                //console.log(event);
+                //console.log(event.target);
+                //console.log('click sur le btnSession');
+                if( cookieUser.value !== '' ){
+                    setCookie('cookieUserName', cookieUser.value, 1);
+                    dataCookie.innerHTML = `<b>${getCookie('cookieUserName')}</b>`;
+                    cookieUser.value = '';
+                    console.log(document.cookie);
+                }
+            });
+
+            btnClearCookieItem.addEventListener('click', function(){
+                if(getCookie('cookieUserName')){
+                    setCookie('cookieUserName');
+                    dataCookie.innerHTML = `<b>cookieUserName effacé</b>`;
+                    console.log(document.cookie);
+                }
+            });
+
+            btnClearCookie.addEventListener('click', function(){
+                clearCookie();
+                dataCookie.innerHTML = `<b>Local effacée</b>`;
+                console.log(document.cookie);
+            });
+
+        });
+    </script>
+</head>
+
+<body>
+    <header class="bg-light text-center">
+        <h1>Formation Javascript - inititation</h1>
+    </header>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="https://github.com/nicoduflot" target="_blank">Github Nicolas</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown"
+                aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNavDropdown">
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                        <a class="nav-link active" aria-current="page" href="./">Accueil</a>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button"
+                            data-bs-toggle="dropdown" aria-expanded="false">
+                            Introduction
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                            <li><a class="dropdown-item" href="../introduction/index.html">Introduction</a></li>
+                            <li><a class="dropdown-item" href="../introduction/tableau.html">Tableaux</a></li>
+                            <li><a class="dropdown-item" href="../introduction/fonction.html">Les fonctions</a></li>
+                            <li><a class="dropdown-item" href="../introduction/destructuration.html">La
+                                    destructuration</a></li>
+                            <li><a class="dropdown-item" href="../introduction/storage.html">Storage</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+    <main class="container">
+        <section class="row">
+            <article class="col-md-6">
+                <header>
+                    <h2>Le stockage de données en JS</h2>
+                </header>
+                <main>
+                    <h3>sessionStorage</h3>
+                    <p>
+                        La session est stockée tant que la fenêtre ayant créée la donnée est ouverte.
+                        Si on ouvre le site via un lien dans une nouvelle fenêtre, 
+                        la session ne suis pas.
+                    </p>
+                    <p>
+                        Si on ferme la fenêtre, la session est automatiquement détruite.
+                    </p>
+                    <p>
+                        <label class="form-label">UserName</label>
+                        <input type="text" class="form-control" id="sessionUser" value="" />
+                    </p>
+                    <p>
+                        <button id="btnSession" class="btn btn-outline-primary">
+                            Sauvegarder UserName en session
+                        </button>
+                    </p>
+                    <p>
+                        <button id="btnClearSessionItem" class="btn btn-outline-primary">
+                            Supprimer UserName de la session
+                        </button>
+                    </p>
+                    <p>
+                        <button id="btnClearSession" class="btn btn-outline-primary">
+                            Vider la session
+                        </button>
+                    </p>
+                    <p>
+                        Session Username actuel : 
+                        <span id="dataSession"></span>
+                    </p>
+                </main>
+                <footer class="text-center">
+                    <a href="../introduction/destructuration.html">
+                        <button class="btn btn-primary">
+                            Aller à la page
+                        </button>
+                    </a>
+                </footer>
+            </article>
+            <article class="col-md-6">
+                <header>
+                    <h2>Le stockage de données en JS</h2>
+                </header>
+                <main>
+                    <h3>localStorage</h3>
+                    <p>
+                        Le localStorage enregistre les données et les 
+                        garde tant qu'on ne les supprime pas ou qu'on 
+                        ne nettoie (clear) pas le localStorage.
+                    </p>
+                    <p>
+                        En revanche, les données du localStorage restent disponible uniquement 
+                        pour le domaine (URL) du site où eles ont été créées
+                    </p>
+                    <p>
+                        <label class="form-label">UserName</label>
+                        <input type="text" class="form-control" id="localUser" value="" />
+                    </p>
+                    <p>
+                        <button id="btnLocal" class="btn btn-outline-primary">
+                            Sauvegarder UserName en local
+                        </button>
+                    </p>
+                    <p>
+                        <button id="btnClearLocalItem" class="btn btn-outline-primary">
+                            Supprimer UserName du local
+                        </button>
+                    </p>
+                    <p>
+                        <button id="btnClearLocal" class="btn btn-outline-primary">
+                            Vider le local
+                        </button>
+                    </p>
+                    <p>
+                        Local Username actuel : 
+                        <span id="dataLocal"></span>
+                    </p>
+                </main>
+                <footer class="text-center">
+                    <a href="../introduction/destructuration.html">
+                        <button class="btn btn-primary">
+                            Aller à la page
+                        </button>
+                    </a>
+                </footer>
+            </article>
+        </section>
+        <section class="row">
+            <article class="offset-md-3 col-md-6">
+                <header>
+                    <h2>Le stockage de données en JS</h2>
+                </header>
+                <main>
+                    <h3>Les cookies</h3>
+                    <p>
+                        Les cookies sont enregistrés dans l'attribut document.cookie. C'est une chaîne de 
+                        caractères qui contient tout les cookies du domaine.
+                        Quand on crée un cookie, on lui donne une date d'expiration, 
+                        le cookie reste stocké dans le navigateurtant que la date n'est pas dépassée 
+                        ou tant que le navigateur n'a pas supprimé les cookies.
+                    </p>
+                    <p>
+                        <label class="form-label">UserName</label>
+                        <input type="text" class="form-control" id="cookieUser" value="" />
+                    </p>
+                    <p>
+                        <button id="btnCookie" class="btn btn-outline-primary">
+                            Sauvegarder UserName en cookie
+                        </button>
+                    </p>
+                    <p>
+                        <button id="btnClearCookieItem" class="btn btn-outline-primary">
+                            Supprimer UserName des cookies
+                        </button>
+                    </p>
+                    <p>
+                        <button id="btnClearCookie" class="btn btn-outline-primary">
+                            Vider les cookies
+                        </button>
+                    </p>
+                    <p>
+                        Cookie Username actuel : 
+                        <span id="dataCookie"></span>
+                    </p>
+                </main>
+                <footer class="text-center">
+                    <a href="../introduction/destructuration.html">
+                        <button class="btn btn-primary">
+                            Aller à la page
+                        </button>
+                    </a>
+                </footer>
+            </article>
+        </section>
+    </main>
+    <footer class="bg-light text-center">
+        &copy; Dawan 2021-12
+    </footer>
+</body>
+
+</html>
