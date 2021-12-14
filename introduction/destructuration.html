@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Formation Javascript initiation</title>
+    <link rel="stylesheet" href="../css/bootstrap.css" />
+    <script src="../js/bootstrap.bundle.js"></script>
+    <link rel="stylesheet" href="../css/style.css" />
+    <script>
+        //desctructuration
+        let liste = [1, 2, 3, 4];
+        // assigner lchacun des éléments du tableau aux variables suivantes : a, b et c ?
+        /*
+        let a = liste[0];
+        let b = liste[1];
+        let c = liste[2];
+        */
+        let [a, b, c] = liste;
+        console.log(`a = ${a}, b = ${b}, c = ${c} `);
+
+        let [d, , f, g] = liste;
+        console.log(`d = ${d}, f = ${f}, g = ${g} `);
+
+        let [h, i, j, k = 0, l = 5, m] = liste;
+        console.log(`h = ${h}, i = ${i}, j = ${j}, k = ${k}, l = ${l}, m = ${m} `);
+
+        function unTruc(unTruc, uneOption, ...valeurs){
+            let [a = 0, b = false, c = 'compta'] = valeurs;
+            // code de la fonction
+        }
+
+        //destructuration d'objet
+        let agentSecret = {
+            lastName: 'James',
+            firstName: 'Bond',
+            job: 'Agent Secret',
+            helloBond: function(value){
+                return `Hello ${value}  `;
+            }
+        };
+
+        console.log(agentSecret);
+        console.log(agentSecret.lastName);
+        console.log(agentSecret.firstName);
+        console.log(agentSecret.job);
+        console.log(agentSecret.helloBond('Peppa Pig'));
+
+        let {
+            lastName,
+            firstName,
+            job,
+            helloBond
+        } = agentSecret;
+
+        console.log(lastName);
+        console.log(typeof lastName);
+        console.log(firstName);
+        console.log(job);
+        console.log(helloBond('Monney Penny'));
+        console.log(typeof helloBond);
+
+        let {
+            lastName: nom,
+            firstName: prenom,
+            job: boulot,
+            pseudo = '007',
+            helloBond: salutation
+        } = agentSecret;
+
+        console.log(nom);
+        console.log(boulot);
+        console.log(pseudo);
+        console.log(salutation('Voyageur !'));
+
+        // échange de valeur
+        let [number1, number2] = [10, 72];
+        console.log(`avant l'échange, number1 = ${number1}, number2 = ${number2} `);
+        /*
+        let tampon  = number1;
+        number1 = number2;
+        number2 = tampon;
+        */
+        [number1, number2] = [number2, number1];
+
+        let personnage1 = {
+            nomHeros: 'Le canard',
+            prenom: 'Herbert',
+            multi: function(){
+                return 'Boule de feu';
+            }
+        };
+
+        let personnage2 = {
+            nomHeros: 'Le rouge',
+            prenom: 'Marvin',
+            multi: function(){
+                return 'Rage quit';
+            }
+        };
+
+        console.log(`Perso 1 :
+${personnage1.prenom} ${personnage1.nomHeros} 
+${personnage1.multi},
+Perso 2 :
+${personnage2.prenom} ${personnage2.nomHeros} 
+${personnage2.multi}`);
+
+        [
+        personnage1.multi,
+        personnage2.multi
+        ] = [
+        personnage2.multi,
+        personnage1.multi
+        ];
+
+        console.log(`Perso 1 :
+${personnage1.prenom} ${personnage1.nomHeros} 
+${personnage1.multi},
+Perso 2 :
+${personnage2.prenom} ${personnage2.nomHeros} 
+${personnage2.multi}`);
+    </script>
+</head>
+
+<body>
+    <header class="bg-light text-center">
+        <h1>Formation Javascript - inititation</h1>
+    </header>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="https://github.com/nicoduflot" target="_blank">Github Nicolas</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown"
+                aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNavDropdown">
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                        <a class="nav-link active" aria-current="page" href="./">Accueil</a>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button"
+                            data-bs-toggle="dropdown" aria-expanded="false">
+                            Introduction
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                            <li><a class="dropdown-item" href="../introduction/index.html">Introduction</a></li>
+                            <li><a class="dropdown-item" href="../introduction/tableau.html">Tableaux</a></li>
+                            <li><a class="dropdown-item" href="../introduction/fonction.html">Les fonctions</a></li>
+                            <li><a class="dropdown-item" href="../introduction/destructuration.html">La
+                                    destructuration</a></li>
+                            <li><a class="dropdown-item" href="../introduction/storage.html">Storage</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+    <main class="container">
+        <section class="row">
+            <article class="col-sm-12">
+                <header>
+                    <h2>La destructuration</h2>
+                </header>
+                <main>
+                    <p>
+                        Tout est dans la console
+                    </p>
+                </main>
+                <footer class="text-center">
+                    <a href="../introduction/destructuration.html">
+                        <button class="btn btn-primary">
+                            Aller à la page
+                        </button>
+                    </a>
+                </footer>
+            </article>
+        </section>
+    </main>
+    <footer class="bg-light text-center">
+        &copy; Dawan 2021-12
+    </footer>
+</body>
+
+</html>
