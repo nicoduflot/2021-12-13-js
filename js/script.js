@@ -15,6 +15,10 @@ function sAll(selector){
     return document.querySelectorAll(selector);
 }
 
+function cE(element){
+    return document.createElement(element);
+}
+
 // fonction création de cookie
 // par défaut, sans variable à l'appel, la fonction setcookie détruire la cookie appelé
 // setCookie('monCookie') => par défaut détruire la cookie monCookie
