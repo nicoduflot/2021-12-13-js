@@ -1,3 +1,20 @@
+// création d'une petite bibliothèque de fonctions utilise sur tout le site
+// vérifier le chargement de la page
+
+function loaded(callable){
+    window.addEventListener('DOMContentLoaded', callable);
+}
+
+// fonction raccourci de document.querySelector
+function s(selector){
+    return document.querySelector(selector);
+}
+
+// fonction raccourci de document.querySelectorAll
+function sAll(selector){
+    return document.querySelectorAll(selector);
+}
+
 // fonction création de cookie
 // par défaut, sans variable à l'appel, la fonction setcookie détruire la cookie appelé
 // setCookie('monCookie') => par défaut détruire la cookie monCookie
