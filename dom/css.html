@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Formation Javascript initiation</title>
+    <link rel="stylesheet" href="../css/bootstrap.css" />
+    <script src="../js/bootstrap.bundle.js"></script>
+    <link rel="stylesheet" href="../css/style.css" />
+    <script src="../js/script.js"></script>
+    <script>
+        loaded(function(){
+            s('#btn').addEventListener('click', function(){
+                let cible = s('#cible');
+                //console.log(cible.style.color);
+                if(cible.style.color !== ''){
+                    //cible.style.color = '';
+                    cible.style.removeProperty('color');
+                }else{
+                    cible.style.setProperty('color', '#aacc00');
+                }
+            });
+
+            s('#btnClasse').addEventListener('click', () => s('#cibleClasse').classList.toggle('paragraphe-vert') );
+
+            let carre = s('#carre');
+            s('#gauche').addEventListener('click', () => carre.className = 'left');
+            s('#droite').addEventListener('click', () => carre.className = 'right');
+            s('#centre').addEventListener('click', () => carre.removeAttribute('class'));
+            
+            // Repérer le clique sur les tier d'écran pour 
+            // bouger le carré à la place du clique sur les boutons
+            
+            /*
+            //créer un évènement clique pour trigger le click sur le bouton
+            let evt = new Event('click', {'bubbles':false, 'cancelable': false});
+            
+            window.addEventListener('click', function(event){
+                let innerWidth = window.innerWidth;
+                let unTier = Math.round( innerWidth/3);
+                let portionGauche = unTier;
+                let portionDroite = unTier*2;
+                let middleWidth = Math.round( innerWidth/2);
+                let xClick = event.layerX;
+                //console.log(innerWidth, middleWidth);
+                //console.log(xClick);
+                if(xClick < portionGauche){
+                    console.log('clique sur le tier gauche de l\'écran');
+                    s('#gauche').dispatchEvent(evt);
+                }else if(xClick > portionDroite){
+                    console.log('clique sur le tier droite de l\'écran');
+                    s('#droite').dispatchEvent(evt);
+                }else{
+                    console.log('clique centre de l\'écran');
+                    s('#centre').dispatchEvent(evt);
+                }
+            });
+            */
+        });
+    </script>
+</head>
+<body>
+    <header class="bg-light text-center">
+        <h1>Formation Javascript - inititation</h1>
+    </header>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="https://github.com/nicoduflot" target="_blank">Github Nicolas</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown"
+                aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNavDropdown">
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                        <a class="nav-link active" aria-current="page" href="../">Accueil</a>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button"
+                            data-bs-toggle="dropdown" aria-expanded="false">
+                            Introduction
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                            <li><a class="dropdown-item" href="../introduction/index.html">Introduction</a></li>
+                            <li><a class="dropdown-item" href="./introduction/tableau.html">Tableaux</a></li>
+                            <li><a class="dropdown-item" href="../introduction/fonction.html">Les fonctions</a></li>
+                            <li><a class="dropdown-item" href="../introduction/destructuration.html">La
+                                    destructuration</a></li>
+                            <li><a class="dropdown-item" href="../introduction/storage.html">Storage</a></li>
+                        </ul>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button"
+                            data-bs-toggle="dropdown" aria-expanded="false">
+                            Interractions DOM
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                            <li><a class="dropdown-item" href="../dom/index.html">Introduction</a></li>
+                            <li><a class="dropdown-item" href="../dom/dom.html">Créer dans le DOM</a></li>
+                            <li><a class="dropdown-item" href="../dom/css.html">DOM et CSS</a></li>
+                            <li><a class="dropdown-item" href="../dom/dataset.html">Les dataset</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+    <main class="container">
+        <section class="row">
+            <article class="col-sm-12">
+                <header>
+                    <h2>Agir sur le CSS</h2>
+                </header>
+                <main>
+                    <h3>Dans l'attribut style</h3>
+                    <button id="btn" class="btn btn-outline-secondary">
+                        Ajouter de la couleur
+                    </button>
+                    <p id="cible">
+                        Lorem ipsum dolor sit amet consectetur adipisicing elit. 
+                        Ab eligendi suscipit assumenda est, inventore, rerum ipsa 
+                        labore alias, ducimus magni totam vero mollitia iste 
+                        accusantium expedita. Optio amet et laudantium?
+                    </p>
+                    <h3>Avec la liste des classes</h3>
+                    <button id="btnClasse" class="btn btn-outline-secondary">
+                        Ajouter de la couleur
+                    </button>
+                    <p id="cibleClasse">
+                        Lorem ipsum dolor sit amet consectetur, adipisicing 
+                        elit. Illo aperiam nemo nesciunt a distinctio amet 
+                        blanditiis et iure rerum soluta, optio velit reiciendis 
+                        laboriosam assumenda minus facilis odit maiores quaerat.
+                    </p>
+                    <h3>Animer des éléments</h3>
+                    <p>
+                        Comme il est possible de créer des transitions de déplacement 
+                        d'éléments en CSS, en jouant avec les classes sur un élément 
+                        il devient possible de "manipuler" cet élément
+                    </p>
+                    <p class="btn-group" role="group" id="control">
+                        <button class="btn btn-outline-primary" id="gauche">Gauche</button>
+                        <button class="btn btn-outline-primary" id="centre">Centre</button>
+                        <button class="btn btn-outline-primary" id="droite">Droite</button>
+                    </p>
+                    <div id="carre">
+
+                    </div>
+                </main>
+                <footer class="text-center">
+                    <a href="./dom/dom.html">
+                        <button class="btn btn-primary">
+                            Aller à la page
+                        </button>
+                    </a>
+                </footer>
+            </article>
+        </section>
+    </main>
+    <footer class="bg-light text-center">
+        &copy; Dawan 2021-12
+    </footer>
+</body>
+</html>
