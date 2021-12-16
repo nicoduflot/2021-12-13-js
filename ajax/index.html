@@ -11,54 +11,53 @@
     <script src="../js/script.js"></script>
     <script>
         loaded(function(){
-            console.log('Page chargée');
-            s('#retourAccueil').addEventListener('click', function(event){
-                console.log(event);
-                let url = event.target.attributes.href;
-                console.log(url);
-                event.preventDefault();
-                s('.message').innerHTML = 'vous ne pouvez pas cliquer sur ce lien';
-            });
+            // pour utiliser AJAX, il faut ouvrir une connexion, appelé xhr
+            // on va écrire une fonction getXhr() dans script.js
+            let xhr = getXhr();
+            console.log(xhr);
+            //console.log(xhr.UNSENT);
+            sAll('button.read').forEach( btn => {
+                btn.addEventListener('click', function(){
+                    // méthode open() est utilisée pour se connecter à une ressource et envoyer une requête
+                    // xhr.open( verb HTTP (GET, POST), url, async(true / false), login, password );
+                    /*
+                    //test en asynchrone
+                    xhr.open('GET', btn.dataset.url, false);
+                    xhr.send();
+                    let result = xhr.responseText;
+                    console.log(result);
+                    */
 
-            s('body > header > h1').addEventListener('dblclick', function(event){
-                console.log(event);
-                console.log(s('body > header > h1'));
-            });
+                    xhr.onreadystatechange = () => {
+                        //xhr.readyState
+                        /*
+                        0 : UNSENT              -> .open() n'a pas encore été appelé
+                        1 : OPENED             -> .open() a été appelé
+                        2 : HEADERS_RECEIVED    -> les entêtes de la requête envoyée ont été reçus
+                        3 : LOADING             -> la requête envoyée est en cours de traitement
+                        4 : DONE                -> le traitement de la requête est terminé
+                        */
+                       
+                        // xhr.status nous donne le statut de la requête, si il est === 200, alors tout s'est bien passé
+                        if(200 !== xhr.status){
+                            s('#result').innerHTML = `<b style="color: darkred;">${xhr.status}</b>`;
+                        }
+                        if(200 === xhr.status && xhr.DONE === xhr.readyState ){
+                            s('#result').innerHTML = xhr.responseText;
+                        }
+                    };
 
-            let paragraphes = sAll('p:not(.showP)');
-            console.log(paragraphes);
-            /*
-            for(paragraphe of paragraphes){
-                console.log(paragraphe);
-            }
-            */
-           let affichage = s('.showP');
-            paragraphes.forEach(function(paragraphe){
-                paragraphe.addEventListener('mouseover', function(){
-                    //console.log(this);
-                    affichage.innerHTML = this.innerHTML;
+                    xhr.onerror = () => {
+                        s('#result').innerHTML = `<b style="color: darkred;">
+                            Une erreur xhr.status : ${xhr.status}</b>`;
+                    };
+
+                    xhr.open('GET', btn.dataset.url);
+                    xhr.send();
+
                 });
             });
-
-            //image over
-            let imgOver = s('#imgOver');
-            imgOver.addEventListener('mouseover', function(){
-                imgOver.setAttribute('src', '../images/pip-boy-thumb-up.png');
-                imgOver.setAttribute('alt', 'Pouce en l\'air');
-                //imgOver.classList.add('red-border');
-                imgOver.classList.toggle('red-border');
-            });
-
-            imgOver.addEventListener('mouseout', function(){
-                imgOver.setAttribute('src', '../images/pip-boy-thumb-down.png');
-                imgOver.removeAttribute('alt');
-                //imgOver.classList.remove('red-border');
-                imgOver.classList.toggle('red-border');
-            });
-
         });
-        
-        console.log('Début du chargement de la page');
     </script>
 </head>
 <body>
@@ -121,54 +120,32 @@
     </nav>
     <main class="container">
         <section class="row">
-            <article class="col-sm-12">
+            <article class="col-md-6">
                 <header>
-                    <h2>Le DOM : Document Object Model</h2>
+                    <h2>AJAX</h2>
                 </header>
                 <main>
+                    <h3>AJAX : Asynchronus Javascript And Xml</h3>
+                    <h4>xhr : Xml Http Request</h4>
                     <p>
-                        Le DOM nous permet de repérer, analyser, modifier et supprimer des éléments dans la page HTML.
-                    </p>
-                    <p>
-                        Il faut que tous les éléments soient chargés avant de pouvoir agir sur eux 
-                        avec le JS. On écoute alors l'évènement de la fenêtre DOMContentLoaded qui survient 
-                        quand tous les éléments de la page ont été chargés.
-                    </p>
-                    <p>
-                        Le lien suivant est surveillé après le chargemnt de la page, si on clique dessus, il est "désactivé" 
-                        (sont comportemnt par défaut est annulé par le JS) et un messgae apparaît en dessous.
-                        <a href="../" id="retourAccueil">Lien</a>
-                    </p>
-                    <p>
-                        <span class="message">
-
-                        </span>
-                    </p>
-                    <h3>Agir sur le DOM</h3>
-                    <p>
-                        Pour agir sur le DOM il faut :
-                    </p>
-                    <ul>
-                        <li>La page doit ête chargée</li>
-                        <li>Connaître le sélecteur de l'élément surveillé</li>
-                        <li>Abonner l'élément à un écouteur d'évènement</li>
-                    </ul>
-                    <p>
-                        L'écouteur d'évènement déclenchera l'action programmée quand l'évènement surveillé 
-                        sur un élément est déclenché.
-                    </p>
-                    <p class="showP">
-
-                    </p>
-                    <img src="../images/pip-boy-thumb-down.png" width="200" id="imgOver" />
-                </main>
-                <footer class="text-center">
-                    <a href="./dom/index.html">
-                        <button class="btn btn-primary">
-                            Aller à la page
+                        <button class="btn btn-outline-secondary read" data-url="../resource/file.txt">
+                            Lire un fichier texte
                         </button>
-                    </a>
-                </footer>
+                        <button class="btn btn-outline-secondary read" data-url="../resource/toto/file.txt">
+                            Lire un fichier en erreur
+                        </button>
+                    </p>
+                </main>
+            </article>
+            <article class="col-md-6">
+                <header>
+                    <h2>La resource</h2>
+                </header>
+                <main>
+                    <p id="result">
+
+                    </p>
+                </main>
             </article>
         </section>
     </main>
@@ -176,7 +153,4 @@
         &copy; Dawan 2021-12
     </footer>
 </body>
-<script>
-    console.log('Fin de chargement du DOM');
-</script>
 </html>

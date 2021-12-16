@@ -52,3 +52,29 @@ function clearCookie(){
         setCookie(tabValue[0]);
     }
 }
+
+// Fontcions AJAX
+
+// getXhr() : ouvrir une connexion AJAX
+
+function getXhr(){
+    let xhr = null;
+    // est-ce que le navigateur supporte AJAX
+    if( window.ActiveXObject || window.XMLHttpRequest ){ 
+        // ActiveXObject représente le protocole AJAX pour IE, 
+        // XMLHttpRequest pour les autres navigateurs 
+        if( window.ActiveXObject ){// si IE
+            try{// on essaie le premier protocole, si une erreur arrive() en retour
+                xhr = new ActiveXObject('Msxml2.XMLHTTP');
+            }catch(e){ // c'est forcément l'autre protocole quel'on utilise
+                xhr = new ActiveXObject('Microsoft.XMLHTTP');
+            }
+        }else{ // s'il ne s'agit pas d'un internet explorer
+            xhr = new XMLHttpRequest();
+        }
+    }else{
+        console.log('le navigateur ne supporte pas ajax');
+        xhr = false;
+    }
+    return xhr;
+}
