@@ -78,3 +78,67 @@ function getXhr(){
     }
     return xhr;
 }
+
+function jsonUsersTable(data){
+    let html = '';
+    
+    for(let user of data){
+        //console.log(user);
+        html += `
+        <tr data-id="${user.id}" data-name="${user.name}" data-email="${user.email}">
+            <td>${user.id}</td>
+            <td>${user.name}</td>
+            <td>${user.email}</td>
+        </tr>
+        `;
+    }
+    return html;
+}
+
+function jsonUsersTableObject(data){
+    let thead = '';
+    let tbody = '';
+    let isFirstRound = true;
+    thead += '<tr>';
+
+    for(let user of data){
+        //ici, chaque élément du JSON
+        tbody += `<tr data-id="${user.id}" data-name="${user.name}" data-email="${user.email}">`;
+        // on parcour les propriétés de l'objet user
+        for( let key in user){
+            //on vérfie que chaque propriété trouvée est une propriété directe de l'objet
+            if(user.hasOwnProperty(key)){
+                // si c'est le premier user, on crée la ligne d'entête du tableau,
+                // en récupérant les clefs des propriétés 
+                if(isFirstRound){
+                    thead += `<th> ${key} </th>`;
+                }
+                // si la propriété ne contient pas un objet (deuxième niveau),
+                // on l'inclus directement dans une cellule
+                if('object' !== typeof user[key]){
+                    tbody += `<td> ${user[key]} </td>`
+                }else{
+                    // si la propriété contient un objet (deuxième niveau)
+                    tbody += `<td>`
+                    for(item in user[key]){
+                        if(user[key].hasOwnProperty(item)){
+                            // on ajoute les détails de l'objet dans la cellule (nom de la propriété et sa valeur)
+                            // si elle ne contient pas d'objet
+                            if('object' !== typeof user[key][item]){
+                                tbody += ` ${item} : ${user[key][item]}`;
+                            }
+                            //si c'est un objet, on ne l'ajoute pas (troisième niveau non affiché)
+                        }
+                    }
+                    tbody += `</td>`
+                }
+            }
+        }
+        isFirstRound = false;
+        tbody += `</tr>`;
+    }
+
+    thead += '</tr>';
+
+    return [thead, tbody];
+}

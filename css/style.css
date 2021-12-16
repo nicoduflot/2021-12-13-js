@@ -68,3 +68,8 @@ p.showP{
     margin: 20px auto;
     transition: transform 1s;
 }
+
+.invisible{
+    display: none;
+    visibility: hidden;
+}

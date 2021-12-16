@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Formation Javascript initiation</title>
+    <link rel="stylesheet" href="../css/bootstrap.css" />
+    <script src="../js/bootstrap.bundle.js"></script>
+    <link rel="stylesheet" href="../css/style.css" />
+    <script src="../js/script.js"></script>
+    <script>
+        loaded(function(){
+            let xhr = getXhr();
+            // indiquer que la réponse attendue sera traitée comme du JSON
+            xhr.responseType = 'json';
+            sAll('button.read').forEach( btn => {
+                btn.addEventListener('click', function(){
+                    xhr.onreadystatechange = () => {
+                        if(200 !== xhr.status){
+                            s('#result tbody').innerHTML = `
+                            <tr>
+                                <td colspan="3" class="text-center">
+                                    <b style="color: darkred;">${xhr.status}</b>
+                                </td>
+                            </tr>`;
+                        }
+                        if(200 === xhr.status && xhr.DONE === xhr.readyState ){
+                            s('#result tbody').innerHTML = jsonUsersTable(xhr.response);
+                            s('#userName').innerHTML = '';
+                            s('#userEmail').innerHTML = '';
+                            s('p.invisible').classList.remove('invisible');
+                        }
+                    };
+
+                    xhr.onerror = () => {
+                        s('#result tbody').innerHTML = `
+                            <tr>
+                                <td colspan="3" class="text-center">
+                                    <b style="color: darkred;">
+                                    Une erreur xhr.status : ${xhr.status}
+                                    </b>
+                                </td>
+                            </tr>`;
+                    };
+
+                    xhr.open('GET', btn.dataset.url);
+                    xhr.send();
+
+                });
+            });
+
+            s('#result tbody').addEventListener('click', function(event){
+                let name = event.target.parentNode.dataset.name;
+                let email = event.target.parentNode.dataset.email;
+                s('#userName').innerHTML = name;
+                s('#userEmail').innerHTML = email;
+            });
+        });
+    </script>
+</head>
+<body>
+    <header class="bg-light text-center">
+        <h1>Formation Javascript - inititation</h1>
+    </header>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="https://github.com/nicoduflot" target="_blank">Github Nicolas</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown"
+                aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNavDropdown">
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                        <a class="nav-link active" aria-current="page" href="../">Accueil</a>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button"
+                            data-bs-toggle="dropdown" aria-expanded="false">
+                            Introduction
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                            <li><a class="dropdown-item" href="../introduction/index.html">Introduction</a></li>
+                            <li><a class="dropdown-item" href="./introduction/tableau.html">Tableaux</a></li>
+                            <li><a class="dropdown-item" href="../introduction/fonction.html">Les fonctions</a></li>
+                            <li><a class="dropdown-item" href="../introduction/destructuration.html">La
+                                    destructuration</a></li>
+                            <li><a class="dropdown-item" href="../introduction/storage.html">Storage</a></li>
+                        </ul>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button"
+                            data-bs-toggle="dropdown" aria-expanded="false">
+                            Interractions DOM
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                            <li><a class="dropdown-item" href="../dom/index.html">Introduction</a></li>
+                            <li><a class="dropdown-item" href="../dom/dom.html">Créer dans le DOM</a></li>
+                            <li><a class="dropdown-item" href="../dom/css.html">DOM et CSS</a></li>
+                            <li><a class="dropdown-item" href="../dom/dataset.html">Les dataset</a></li>
+                        </ul>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button"
+                            data-bs-toggle="dropdown" aria-expanded="false">
+                            AJAX
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                            <li><a class="dropdown-item" href="../ajax/index.html">Introduction</a></li>
+                            <li><a class="dropdown-item" href="../ajax/promesse.html">Promesse</a></li>
+                            <li><a class="dropdown-item" href="../ajax/bdd.html">JSON Bdd</a></li>
+                            <li><a class="dropdown-item" href="../ajax/fetch.html">fetch</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+    <main class="container">
+        <section class="row">
+            <article class="col-md-6">
+                <header>
+                    <h2>Manipulation de JSON</h2>
+                </header>
+                <main>
+                    <p>
+                        <button class="btn btn-outline-secondary read" data-url="https://jsonplaceholder.typicode.com/users">
+                            Lire users sur jsonplaceholder
+                        </button>
+                    </p>
+                    <p>
+                        <button class="btn btn-outline-secondary read" data-url="../resource/bdd.json">
+                            Lire bdd.json dans les ressources en local
+                        </button>
+                    </p>
+                    <p class="invisible">
+                        <label>Nom : </label><span id="userName"></span><br />
+                        <label>Email : </label><span id="userEmail"></span>
+                    </p>
+                </main>
+            </article>
+            <article class="col-md-6">
+                <header>
+                    <h2>La resource</h2>
+                </header>
+                <main>
+                    <table id="result" class="table">
+                        <thead>
+                            <tr>
+                                <th>Id</th>
+                                <th>Nom</th>
+                                <th>Email</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td colspan="3" class="text-center">
+                                    Pas de données actuellement
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </main>
+            </article>
+        </section>
+    </main>
+    <footer class="bg-light text-center">
+        &copy; Dawan 2021-12
+    </footer>
+</body>
+</html>
