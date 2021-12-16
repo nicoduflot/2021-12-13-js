@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="fr">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -10,7 +11,64 @@
     <link rel="stylesheet" href="../css/style.css" />
     <script src="../js/script.js"></script>
     <script>
-        loaded(function(){
+
+        function suggestionUser(users, input){
+            let html = '';
+            let lineOK = false;
+            let lineResult = '';
+            let compare = '';
+            let style = '';
+
+            for(let user of users){
+                //ici, chaque élément du JSON
+                lineResult += '<tr>';
+                // on parcour les propriétés de l'objet user
+                for(let key in user){
+                    //on vérfie que chaque propriété trouvée est une propriété directe de l'objet
+                    if(user.hasOwnProperty(key)){
+                        // si la propriété ne contient pas un objet (deuxième niveau),
+                        // on l'inclus directement dans une cellule
+                        if('object' !== typeof user[key]){
+                            compare = user[key].toString().toLowerCase();
+                            let position = compare.indexOf(input.toLowerCase());
+                            if( position >= 0){
+                                lineOK = true
+                                style = ' style="color:#0d6efd; font-weight:bold"';
+                            }
+                            position = -1;
+                            lineResult += `<td${style}>${user[key]}</td$>`;
+                            style = '';
+                        }else{
+                            // si la propriété contient un objet (deuxième niveau)
+                            for(item in user[key]){
+                                if(user[key].hasOwnProperty(item)){
+                                    if('object' !== typeof user[key][item]){
+                                        compare = user[key][item].toString().toLowerCase();
+                                        let position = compare.indexOf(input.toLowerCase());
+                                        if( position >= 0){
+                                            lineOK = true
+                                            style = ' style="color:#0d6efd; font-weight:bold"';
+                                        }
+                                        position = -1;
+                                        lineResult += `<td${style}>${user[key][item]}</td$>`;
+                                        style = '';
+                                    }
+                                }
+                            }
+                        }
+                    }
+
+                }
+                lineResult += '<tr>';
+                html += (lineOK)?lineResult:'';
+                lineResult = '';
+                lineOK = false;
+            }
+
+            return html;
+        }
+
+        loaded(function () {
             /*
             s('#result tbody').addEventListener('click', function(event){
                 let name = event.target.parentNode.dataset.name;
@@ -20,25 +78,25 @@
             });
             */
 
-            sAll('button.read').forEach( btn => {
-                btn.addEventListener('click', function(){
+            sAll('button.read').forEach(btn => {
+                btn.addEventListener('click', function () {
                     fetch(this.dataset.url)
-                    .then( response => response.json())
-                    .then( data => {
-                        //utiliser le data via une fonction de génération dynamique d'un tableau
-                        let tabResult = jsonUsersTableObject(data);
-                        //console.log(tabResult);
-                        s('#result > thead').innerHTML = ` ${tabResult[0]} `;
-                        s('#result > tbody').innerHTML = ` ${tabResult[1]} `;
-                        
-                        s('#userName').innerHTML = '';
-                        s('#userEmail').innerHTML = '';
-                        s('p.invisible').classList.remove('invisible');
-                    });
+                        .then(response => response.json())
+                        .then(data => {
+                            //utiliser le data via une fonction de génération dynamique d'un tableau
+                            let tabResult = jsonUsersTableObject(data);
+                            //console.log(tabResult);
+                            s('#result > thead').innerHTML = ` ${tabResult[0]} `;
+                            s('#result > tbody').innerHTML = ` ${tabResult[1]} `;
+
+                            s('#userName').innerHTML = '';
+                            s('#userEmail').innerHTML = '';
+                            s('p.invisible').classList.remove('invisible');
+                        });
                 });
             });
 
-            s('#result tbody').addEventListener('click', function(event){
+            s('#result tbody').addEventListener('click', function (event) {
                 console.log(event);
                 let name = event.target.parentNode.dataset.name;
                 let email = event.target.parentNode.dataset.email;
@@ -46,9 +104,30 @@
                 s('#userName').innerHTML = name;
                 s('#userEmail').innerHTML = email;
             });
+
+            // suggestion utilisateurs
+            let inputSearch = s('#searchUser');
+            let result = '';
+
+            inputSearch.addEventListener('keyup', function () {
+                //console.log('test');
+                let inputValue = inputSearch.value;
+                if(inputValue.length >= 3){
+                    fetch(inputSearch.dataset.url)
+                        .then(response => response.json())
+                        .then(liste => {
+                            //console.log('test');
+                            result = suggestionUser(liste, inputValue);
+                            s('#result > tbody').innerHTML = result;
+                        })
+                        .catch(console.log());
+                }
+            });
+
         });
     </script>
 </head>
+
 <body>
     <header class="bg-light text-center">
         <h1>Formation Javascript - inititation</h1>
@@ -115,7 +194,8 @@
                 </header>
                 <main>
                     <p>
-                        <button class="btn btn-outline-secondary read" data-url="https://jsonplaceholder.typicode.com/users">
+                        <button class="btn btn-outline-secondary read"
+                            data-url="https://jsonplaceholder.typicode.com/users">
                             Lire users sur jsonplaceholder
                         </button>
                     </p>
@@ -135,7 +215,14 @@
                     <h2>Suggestion utilisateurs</h2>
                 </header>
                 <main>
-                    
+                    <p>
+                        <input type="text" class="form-control" id="searchUser" data-url="../resource/users.json" />
+                    </p>
+                    <table id="suggResult" class="table">
+                        <tbody>
+
+                        </tbody>
+                    </table>
                 </main>
             </article>
         </section>
@@ -147,10 +234,10 @@
                 <main>
                     <table id="result" class="table">
                         <thead>
-                            
+
                         </thead>
                         <tbody>
-                            
+
                         </tbody>
                     </table>
                 </main>
@@ -161,4 +248,5 @@
         &copy; Dawan 2021-12
     </footer>
 </body>
+
 </html>
