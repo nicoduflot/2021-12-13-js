@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Formation Javascript initiation</title>
+    <link rel="stylesheet" href="../css/bootstrap.css" />
+    <script src="../js/bootstrap.bundle.js"></script>
+    <link rel="stylesheet" href="../css/style.css" />
+    <script src="../js/script.js"></script>
+    <script>
+
+        /*
+        //cette fonction peut bloquer le reste du script endant 7 secondes
+        function resolveAfter7Seconds(){
+            let randError = Math.floor( Math.random()*3 + 1 );
+
+            setTimeout( function(){
+                if(2 !== randError){
+                    console.log('Le formateur aime bien les jeux de rôles');
+                }else{
+                    console.log(new Error('L\'information n\'est pas disponible'));
+                }
+            }, 7000);
+        }
+
+        resolveAfter7Seconds();
+        */
+
+        /*
+        Promise =  crée une fonction asynchrone dont l'éxécution ne 
+        stoppe pas ou ne "fige" pas le reste du script ou le chargement de la page
+
+        Une promesse renvoie deux type de résultat : 
+        resolve()   => réussite de la promesse
+        reject()    => échec dela promesse
+
+        la fonction qui pourrait figer le script doit retourner une promesse
+
+        Elle doit ensuite être appelé par une fonctionne asynchrone qui la lancera en 
+        attente de réponse : await
+        */
+
+        function resolveAfter7Seconds(){
+            let randError = Math.floor( Math.random()*3 + 1 );
+            return new Promise( function(resolu, rejete){
+                setTimeout( function(){
+                    if(2 !== randError){
+                        resolu('Le formateur aime bien les jeux de rôles');
+                    }else{
+                        rejete(new Error('L\'information n\'est pas disponible'));
+                    }
+                }, 1000);
+            } );
+        }
+
+        async function asyncCall(){
+            let result = await resolveAfter7Seconds();
+            return result;
+        }
+
+        asyncCall()
+        .then( message => {
+            return `async message : ${message} `;
+            //console.log();
+        } )
+        .then( formatMessage => {
+            console.log(formatMessage);
+        })
+        .catch( error => {
+            console.log(`async error : ${error} `);
+        } )
+        .finally( () => {
+            console.log(`Fin de la promesse appelée par la fonction asynchrone `);
+        });
+
+        console.log('test');
+
+        // récupérer une ressource en asynchrone
+        function getResource(){
+            let randError = Math.floor( Math.random()*3 + 1 );
+            return new Promise( function(resolu, rejete){
+                setTimeout( function(){
+                    if(2 !== randError){
+                        resolu('Le formateur aime bien les jeux de rôles');
+                    }else{
+                        rejete(new Error('L\'information n\'est pas disponible'));
+                    }
+                }, 3000);
+            } );
+        }
+
+        loaded(function(){
+            let loadingGif = `<img src="../images/loading.gif" /><br />
+            <b style="color: darkgreen; font-weight: bold">En attente d'une information</b>`;
+
+            s('#btn').addEventListener('click', function(){
+                s('#result').innerHTML = loadingGif;
+                this.setAttribute('disabled', 'disabled');
+                getResource()
+                .then( message => {
+                    s('#result').innerHTML = message;
+                })
+                .catch( error => {
+                    s('#result').innerHTML = `
+                    <b style="color: darkred; font-weight: bold;">
+                        ${error}    
+                    </b>
+                    `;
+                })
+                .finally( () => {
+                    this.removeAttribute('disabled');
+                });
+            });
+
+            s('#btnTest').addEventListener('click', function(){
+                console.log('Coucou');
+            });
+        });
+    </script>
+</head>
+<body>
+    <header class="bg-light text-center">
+        <h1>Formation Javascript - inititation</h1>
+    </header>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="https://github.com/nicoduflot" target="_blank">Github Nicolas</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown"
+                aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNavDropdown">
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                        <a class="nav-link active" aria-current="page" href="../">Accueil</a>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button"
+                            data-bs-toggle="dropdown" aria-expanded="false">
+                            Introduction
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                            <li><a class="dropdown-item" href="../introduction/index.html">Introduction</a></li>
+                            <li><a class="dropdown-item" href="./introduction/tableau.html">Tableaux</a></li>
+                            <li><a class="dropdown-item" href="../introduction/fonction.html">Les fonctions</a></li>
+                            <li><a class="dropdown-item" href="../introduction/destructuration.html">La
+                                    destructuration</a></li>
+                            <li><a class="dropdown-item" href="../introduction/storage.html">Storage</a></li>
+                        </ul>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button"
+                            data-bs-toggle="dropdown" aria-expanded="false">
+                            Interractions DOM
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                            <li><a class="dropdown-item" href="../dom/index.html">Introduction</a></li>
+                            <li><a class="dropdown-item" href="../dom/dom.html">Créer dans le DOM</a></li>
+                            <li><a class="dropdown-item" href="../dom/css.html">DOM et CSS</a></li>
+                            <li><a class="dropdown-item" href="../dom/dataset.html">Les dataset</a></li>
+                        </ul>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button"
+                            data-bs-toggle="dropdown" aria-expanded="false">
+                            AJAX
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                            <li><a class="dropdown-item" href="../ajax/index.html">Introduction</a></li>
+                            <li><a class="dropdown-item" href="../ajax/promesse.html">Promesse</a></li>
+                            <li><a class="dropdown-item" href="../ajax/bdd.html">JSON Bdd</a></li>
+                            <li><a class="dropdown-item" href="../ajax/fetch.html">fetch</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+    <main class="container">
+        <section class="row">
+            <article class="col-md-6">
+                <header>
+                    <h2>Les Promesses (Promise)</h2>
+                </header>
+                <main>
+                    <p>
+                        <button class="btn btn-outline-secondary" id="btn">
+                            Récupérer une information
+                        </button>
+                        <button class="btn btn-outline-secondary" id="btnTest">
+                            Afficher coucou en console
+                        </button>
+                    </p>
+                </main>
+            </article>
+            <article class="col-md-6">
+                <header>
+                    <h2>La resource</h2>
+                </header>
+                <main>
+                    <p id="result">
+
+                    </p>
+                </main>
+            </article>
+        </section>
+    </main>
+    <footer class="bg-light text-center">
+        &copy; Dawan 2021-12
+    </footer>
+</body>
+</html>
